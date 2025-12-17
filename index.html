@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Surat Cinta</title>
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* Amplop */
+    #envelope {
+        font-size: 100px;
+        cursor: pointer;
+        transition: transform 0.5s, filter 0.5s;
+        user-select: none;
+    }
+
+    .pink {
+        filter: hue-rotate(300deg) saturate(2);
+        transform: scale(1.1);
+    }
+
+    /* Surat */
+    #letter {
+        position: absolute;
+        width: 80%;
+        max-width: 400px;
+        height: 0;
+        background: #ffe6f0;
+        border-radius: 12px;
+        overflow: hidden;
+        padding: 0 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        transition: height 1s ease;
+        text-align: center;
+    }
+
+    #letter.open {
+        height: 300px;
+        padding-top: 20px;
+    }
+
+    #letter p {
+        opacity: 0;
+        transition: opacity 1s;
+        margin-top: 20px;
+        color: #d63384;
+    }
+
+    #letter.open p {
+        opacity: 1;
+    }
+
+    /* Love jatuh */
+    .love {
+        position: absolute;
+        top: -20px;
+        color: pink;
+        font-size: 20px;
+        animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+        to {
+            transform: translateY(110vh);
+            opacity: 0;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div id="envelope">✉️</div>
+
+<div id="letter">
+    <p>
+        Haiii 💗<br><br>
+        Ini surat kecil buat kamu.<br>
+        Terima kasih sudah hadir,<br>
+        semoga hati kamu selalu hangat ❤️<br><br>
+        Dari aku ✨
+    </p>
+</div>
+
+<script>
+    let rubbed = false;
+    let opened = false;
+    const envelope = document.getElementById("envelope");
+    const letter = document.getElementById("letter");
+
+    function rub() {
+        if (!rubbed) {
+            rubbed = true;
+            envelope.classList.add("pink");
+            envelope.textContent = "💌";
+        } else if (!opened) {
+            opened = true;
+            envelope.style.display = "none";
+            letter.classList.add("open");
+            startLoveRain();
+        }
+    }
+
+    envelope.addEventListener("mousedown", rub);
+    envelope.addEventListener("touchstart", rub);
+
+    function startLoveRain() {
+        for (let i = 0; i < 50; i++) {
+            setTimeout(createLove, i * 100);
+        }
+    }
+
+    function createLove() {
+        const love = document.createElement("div");
+        love.className = "love";
+        love.textContent = "❤️";
+        love.style.left = Math.random() * 100 + "vw";
+        love.style.fontSize = (15 + Math.random() * 25) + "px";
+        love.style.animationDuration = (2 + Math.random() * 3) + "s";
+        document.body.appendChild(love);
+
+        setTimeout(() => {
+            love.remove();
+        }, 5000);
+    }
+</script>
+
+</body>
+</html>
